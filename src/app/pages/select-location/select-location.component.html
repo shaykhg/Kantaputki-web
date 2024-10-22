@@ -1,0 +1,142 @@
+<div>
+  <div class="text-center title">{{util.setWords('YourLocation')}}</div>
+  <form [formGroup]="locationFormGroup">
+    <div class="row">
+      <div class="col">
+        <mat-form-field appearance="outline" class="w-full">
+          <mat-label>{{util.setWords('StreetAndBuildingNo')}}</mat-label>
+          <input class="w-full" formControlName="building" matInput
+                 required>
+        </mat-form-field>
+      </div>
+
+    </div>
+    <div>
+
+      <div class="row">
+        <div class="col">
+          <mat-form-field appearance="outline">
+            <mat-label>{{util.setWords('PostCode')}}</mat-label>
+            <input type="text" pattern="\d*" minlength="5" maxlength="5"
+                   class="w-full" formControlName="postcode" matInput
+                    #postcode (input)="onSearchChange($event.target.value)" (blur)="util.makeNumber(locationFormGroup, 'postcode',postcode.value)" required>
+          </mat-form-field>
+
+        </div>
+
+        <div class="col">
+          <mat-form-field appearance="outline" style="cursor: not-allowed">
+            <mat-label>{{util.setWords('City')}}</mat-label>
+              <input style="cursor: not-allowed"  readonly  [(ngModel)]="post" class="w-full" formControlName="city" matInput
+                      required>
+          </mat-form-field>
+        </div>
+
+
+
+      </div>
+<!--        <app-information></app-information>-->
+
+      <div class="container">
+        <div class="text-center my-5">
+          <h4>Valitse toivomasi asennusaika ja syötä osoitetietosi</h4>
+
+        </div>
+        <mat-card class="info">
+
+          <p>Jos tilaat laajemman remontin, valitse toive alkamisajankohtasi. Olemme sinuun vielä yhteydessä asennuksen tiimoilta.  👍</p>
+        </mat-card>
+
+      </div>
+
+      <div style="text-align: right">
+        <button mat-raised-button class="location-button" (click)="addLocation(postcode.value)">{{util.setWords('AddLocation')}}</button>
+      </div>
+
+    </div>
+
+
+    <div *ngIf="locProgress" style="text-align: -webkit-center" class="m-t-30">
+      <mat-spinner class="dis-inline" diameter="60"></mat-spinner>
+    </div>
+
+<!--    Show schedule based on location-->
+
+    <div  *ngIf="showCalendar && !locProgress">
+      <div class="text-center title">{{util.setWords('MaintenanceTime')}}</div>
+
+      <div>
+        <div class="next-schedule row" *ngIf="!showSchedule">
+          <span class="col-lg col-md-12">{{util.setWords('NextAvailableTime')}} : </span>
+
+          <div class="col-lg col-md-12 p-0 schedule-detail" *ngIf="firstTime">
+            <div>{{util.setWords('Date')+': ' + util.getHumanShortDate(firstTime.date)}}</div>
+            <div>{{ util.setWords('Time') +': ' + firstTime.from }}</div>
+<!--            <div>{{util.setWords('Technician') + ':' + firstTime.name}}</div>-->
+          </div>
+        </div>
+      </div>
+      <div class="m-t-50">
+        <mat-checkbox [checked]="showSchedule" (change)="setTimeTech($event)"
+                      class="time-checkbox">
+          {{util.setWords('PickADifferentTime')}}
+        </mat-checkbox>
+      </div>
+
+      <div  *ngIf="showSchedule">
+        <div class="dis-flex justify-content-between my-3">
+          <button mat-raised-button class="w-btn" *ngIf="this.showPrevious > 0" (click)="getPreviousWeek()">< {{util.setWords('PreviousWeek')}}</button>
+          <button mat-flat-button class="w-btn" (click)="getNextWeek()">{{util.setWords('NextWeek')}} ></button>
+
+        </div>
+
+        <div  *ngIf="calendarProgress"  style="text-align: -webkit-center" class="m-t-10">
+          <mat-spinner class="dis-inline" diameter="50"></mat-spinner>
+        </div>
+        <div *ngIf="!calendarProgress" >
+          <div  class="my-5" *ngFor="let day of days">
+            {{util.getDayName(day)}}&nbsp;
+            ({{util.getHumanShortDate(day)}})
+
+            <hr>
+            <div *ngIf="isSlotsAvl(day); else noSlot">
+              <div class="my-3" *ngFor="let date of calendar">
+
+                <div *ngIf="day.isSame(date.date, 'day')">
+
+                  <div class="row">
+              <span  *ngFor="let item of date.slots">
+                <button *ngIf="item.available" [class] = "timeSelectedCss(item)"  mat-button (click)="scheduleInfo(item)"><span>{{item.from}} - {{item.till}}</span></button>
+<!--                <button *ngIf="item.available" [class] = "timeSelectedCss(item)"  mat-button (click)="scheduleInfo(item)"><span>{{item.from}} - {{item.till}} <br>({{item.name}})</span></button>-->
+
+              </span>
+
+                  </div>
+
+                </div>
+
+
+              </div>
+            </div>
+
+            <ng-template #noSlot>{{util.setWords('NoSlotFound')}}</ng-template>
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <hr>
+      <div class="m-t-30">
+        <button class="float-l stepper-prev-button" mat-flat-button (click)="dataService.index = 0">{{util.setWords('Description')}}</button>
+        <button class="float-r stepper-button" (click)="sendLocationData()" mat-flat-button>{{util.setWords('Payment')}}</button>
+      </div>
+    </div>
+  </form>
+
+
+</div>
+

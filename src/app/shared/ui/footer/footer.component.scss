@@ -1,0 +1,32 @@
+.footer{
+  color: white;
+  background-color: black;
+  padding: 10px;
+  margin-top: 50px;
+  text-align: center;
+  //position: fixed;
+  //left: 0;
+  //right: 0;
+  //bottom: 0;
+
+}
+
+.footer-link a{
+  color: white;
+
+}
+
+@media (max-width: 500px) {
+ .right{
+ text-align: center;
+
+}
+
+}
+
+@media (min-width: 499px) {
+  .right{
+    text-align: right;
+
+  }
+}

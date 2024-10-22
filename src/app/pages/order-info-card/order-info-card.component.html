@@ -1,0 +1,126 @@
+<mat-card class="info-card mat-elevation-z5">
+  <h3>{{util.setWords('YourOrder')}}</h3>
+  <hr>
+
+<!--  select services-->
+
+  <div>
+    <div *ngIf="data.selectedService.length === 0">
+      <div class="steps-title">
+        <span class="mdi vertical-align main-icon  main-icon mdi-tools"></span>
+        &nbsp;<span>{{util.setWords('NoServicesSelected!')}}</span>
+      </div>
+    </div>
+
+    <div *ngIf="data.selectedService.length > 0">
+      <div class="steps-title">
+        <span class="mdi vertical-align main-icon mdi-tools"></span>
+        &nbsp;<span>{{util.setWords('SelectedService')}}:</span>
+      </div>
+    </div>
+
+    <ul style="list-style: none" class="steps-subtitle check" *ngIf="data.selectedService.length > 0">
+      <li class="dis-flex" *ngFor="let service of data.selectedService">
+        <span class="flex-grow-1">
+          {{service.shortName}}</span>
+        <span class="float-r">
+          {{service.price === 0 ? '-' :  service.price + '&euro;'}}
+        </span>
+        <span (click)="removeLastService(service)" style="margin-left: 20px;color: grey">
+          <svg style="width:24px;height:24px" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20 6.91L17.09 4L12 9.09L6.91 4L4 6.91L9.09 12L4 17.09L6.91 20L12 14.91L17.09 20L20 17.09L14.91 12L20 6.91Z" />
+          </svg>
+        </span>
+      </li>
+
+    </ul>
+  </div>
+
+<!--  Select Location-->
+
+  <div>
+<!--    <div class="steps-title" *ngIf="!data.locationData && data.selectedService.length > 0">-->
+<!--      <span class="mdi vertical-align main-icon mdi-map-marker"></span>-->
+<!--      &nbsp;-->
+<!--      <span> Step 2 : Select Location</span>-->
+<!--    </div>-->
+
+    <div class="steps-title" *ngIf="data.locationData">
+      <span class="mdi vertical-align main-icon mdi-map-marker"></span>
+      &nbsp;
+      {{util.setWords('YourLocation')}}:
+    </div>
+
+    <div *ngIf="data.locationData">
+      <ul class="steps-subtitle loc-li">
+        <li>      <span class="mdi vertical-align sub-icon mdi-home"></span>
+          {{data.locationData.building}}, {{data.locationData.city}}, {{data.locationData.postcode}}</li>
+      </ul>
+    </div>
+
+  </div>
+
+<!--  Service Schedule & Technician-->
+  <div *ngIf="data.locationData">
+    <div class="steps-title">
+      <span class="mdi vertical-align main-icon mdi-calendar"></span>
+      &nbsp;
+      <span>
+        {{util.setWords('ServiceSchedule&Technician')}}
+      </span>
+    </div>
+
+    <div>
+      <ul class="steps-subtitle">
+        <li>
+          <span class="mdi vertical-align sub-icon mdi-clock-time-eight-outline"></span>
+          {{data.defaultTimeTech.from}} - {{data.defaultTimeTech.till}}
+
+        </li>
+        <li>
+          <span class="mdi vertical-align sub-icon mdi-calendar-range"></span>
+          {{util.getHumanShortDate(data.defaultTimeTech.date)}}
+
+        </li>
+<!--        <li>-->
+<!--          <span>-->
+<!--          <span class="mdi vertical-align sub-icon mdi-account-hard-hat"></span>-->
+<!--            {{data.defaultTimeTech.name}}-->
+<!--        </span>-->
+<!--        </li>-->
+      </ul>
+    </div>
+  </div>
+
+  <hr>
+
+<div class="amount-info" *ngIf="data.selectedService.length > 0">
+  <div><i>{{util.setWords('vatIncluded')}}</i></div>
+
+<!--  <div class="amount-info"> {{util.setWords('TotalBefore')}} : {{data.total}}</div>-->
+
+  <div *ngIf="data.couponApplied">
+    <div>
+      Coupon applied: {{data.couponName}}
+    </div>
+    <div>
+      Discount: {{data.couponDiscount + '&euro;'}}
+    </div>
+    <div>
+      Total(After applying coupon) : {{data.total - data.couponDiscount}}
+    </div>
+
+  </div>
+
+  <div>
+    <div *ngFor="let charge of data.charges">
+      <div class="amount-info">{{charge.name}} : {{charge.value}}{{charge.amountType === 'Absolute'? '&euro;' : '%'}}</div>
+    </div>
+  </div>
+  <div>
+    <h5 class="text-center"><b>{{util.setWords('Total')}}: {{ data.total ?  data.total + '&euro;'   : 0}}</b></h5>
+  </div>
+
+</div>
+</mat-card>
+

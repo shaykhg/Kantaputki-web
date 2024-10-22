@@ -1,0 +1,44 @@
+<img src="/assets/images/bg-signup.jpg" alt="piano" class="bg">
+<div class="container text-center">
+  <mat-card class="signup-card ">
+
+    <div routerLink="/" class="text-center m-t-15 m-b-15"><img src="assets/images/logo.png" style="width: 140px"></div>
+
+    <form [formGroup]="signupForm">
+
+      <mat-form-field appearance="outline"  class="w-full">
+        <mat-label>{{util.setWords('Name')}}</mat-label>
+        <label>
+          <input formControlName="name" matInput type="text">
+        </label>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline"  class="w-full">
+        <mat-label>{{util.setWords('Email')}}</mat-label>
+        <label>
+          <input formControlName="email" matInput type="text">
+        </label>
+      </mat-form-field>
+      <div class="mat-small t-left">{{util.setWords('PasswordMustBeMin8Characters')}}</div>
+      <mat-form-field appearance="outline"  class="w-full">
+        <mat-label>{{util.setWords('Password')}}</mat-label>
+        <label>
+          <input minlength="8" formControlName="password" matInput type="password">
+        </label>
+      </mat-form-field>
+
+
+      <div>
+        <button mat-raised-button class="signup-btn" (click)="signUp()">{{util.setWords('SignUp')}}</button>
+      </div>
+      <hr>
+      <small routerLink="/login" class="m-t-10">{{util.setWords('AlreadyHaveAnAccount?')}}</small>
+
+      <div>
+        <button routerLink="/login" mat-raised-button class="login-btn">{{util.setWords('Login')}}</button>
+      </div>
+
+    </form>
+
+  </mat-card>
+</div>

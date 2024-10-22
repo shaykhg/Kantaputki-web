@@ -1,0 +1,221 @@
+<div *ngIf="progress"  class="progress-spin">
+  <mat-spinner ></mat-spinner>
+
+</div>
+<div *ngIf="!progress" class="container">
+  <div *ngIf="orderData" class="text-white">
+    <mat-card class="mat-elevation-z5">
+      <h5 class="m-t-30">{{util.setWords('OrderDetails')}}</h5>
+      <hr>
+
+      <div class="order-details-table">
+        <div class="row">
+          <div class="col-4"><span class="mdi mdi-information-outline m-r-8"></span>{{util.setWords('BookingID')}}</div>
+          <div class="col-8">{{orderData._id}}</div>
+        </div>
+        <div class="row">
+          <div class="col-4"><span class="mdi mdi-piano m-r-8"></span>{{util.setWords('Name')}}</div>
+          <div class="col-8">{{orderData.pianoName}}</div>
+        </div>
+        <div class="row">
+          <div class="col-4"><span class="mdi mdi-numeric m-r-8"></span>{{util.setWords('SerialNo.')}}</div>
+          <div class="col-8">{{orderData.serial}}</div>
+        </div>
+        <div class="row">
+          <div class="col-4"><span class="mdi mdi-music-note m-r-8"></span>{{util.setWords('PianoType')}}</div>
+          <div class="col-8">{{orderData.type}}</div>
+        </div>
+        <div class="row">
+          <div class="col-4"><span class="mdi mdi-hammer-screwdriver m-r-8"></span>{{util.setWords('LastService')}}</div>
+          <div class="col-8">{{getServiceTime(orderData)}}</div>
+        </div>
+      </div>
+
+
+      <h5 class="m-t-30">{{util.setWords('ServiceList')}}</h5>
+      <hr>
+
+      <ul>
+        <li *ngFor="let service of orderData.service">{{service.  name}}</li>
+      </ul>
+    </mat-card>
+
+    <div class="row">
+      <mat-card class="mat-elevation-z5 m-t-15 col-lg col-xs-12">
+        <h5>{{util.setWords('AddNewService')}}</h5>
+        <hr>
+
+        <div>
+
+          <div *ngIf="allServices" >
+            <div *ngIf="remServices.length > 0; else noService"  class="row service-grid">
+              <div *ngFor="let service of remServices, i as index" (click)="pushService(service)" [class]="getServiceClass(service)" class="col-lg-5 cl-xs-12">
+                <div>
+                  <span>{{service.name}}</span>
+                  <span class="float-r">{{service.price + '&euro;'}}</span>
+                  <hr>
+                  <div>
+                    {{service.desc}}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <ng-template #noService class="t-center">
+              <h4>{{util.setWords('YouHaveAlready')}}</h4>
+            </ng-template>
+          </div>
+
+        </div>
+
+      </mat-card>
+      <mat-card *ngIf="remServices.length !== 0" class="mat-elevation-z5 m-t-15 col-lg-6 col-xs-12 m-l-20">
+        <div> {{this.chosenServices.length > 0 ? 'Selected Services' : 'Please select new services'}}
+        </div>
+        <hr>
+
+        <div class="text-center" *ngIf="chosenServices.length === 0">
+          <h5>{{util.setWords('NoServicesSelected')}}</h5>
+        </div>
+
+        <div *ngIf="chosenServices.length > 0">
+          <div>
+            <ul>
+              <li *ngFor="let service of this.chosenServices">{{service.name}}</li>
+            </ul>
+
+          </div>
+
+          <div>
+            <div *ngFor="let charge of dataService.charges">
+              <div class="amount-info">{{charge.name}} : {{charge.value}}{{charge.amountType === 'Absolute'? '&euro;' : '%'}}</div>
+            </div>
+          </div>
+
+          <div class="amount-info m-t-20">Total : {{total}}&euro;</div>
+<!--          <div class="amount-info">Sub Total (after tax*) : {{subTotal}}&euro;</div>-->
+        </div>
+
+      </mat-card>
+
+    </div>
+
+    <div *ngIf="remServices.length !== 0" class="row">
+      <div class="m-t-30 col text-center">
+        <button  [disabled]="chosenServices.length === 0" mat-raised-button class="save-btn" (click)="addOrder()">{{util.setWords('Save')}}</button>
+      </div>   <div class="m-t-30 col">
+    </div>
+
+    </div>
+
+    <div *ngIf="showPayment">
+      <hr>
+
+      <div class="text-center">
+        <div class="card">
+          <!--        <div class="row paypal">-->
+          <!--          <div class="left">-->
+          <!--            <input id="pp" type="radio" name="payment" />-->
+          <!--            <div class="radio"></div>-->
+          <!--            <label for="pp">Paypal</label>-->
+          <!--          </div>-->
+          <!--          <div class="right">-->
+          <!--            <img src="http://i68.tinypic.com/2rwoj6s.png" alt="paypal" />-->
+          <!--          </div>-->
+          <!--        </div>-->
+          <div class="row credit">
+            <div class="left">
+              <input id="cd" type="radio" name="payment" />
+              <div class="radio"></div>
+              <label for="cd">Debit/ Credit Card</label>
+            </div>
+            <div class="right">
+              <img src="http://i66.tinypic.com/5knfq8.png" alt="visa" />
+              <img src="http://i67.tinypic.com/14y4p1.png" alt="mastercard" />
+              <img src="http://i63.tinypic.com/1572ot1.png" alt="amex" />
+              <img src="http://i64.tinypic.com/2i92k4p.png" alt="maestro" />
+            </div>
+          </div>
+          <div class="row cardholder">
+            <div class="info">
+              <label for="cardholdername">Name</label>
+              <input placeholder="e.g. Richard Bovell" id="cardholdername" type="text" />
+            </div>
+          </div>
+          <div class="row number">
+            <div class="info">
+              <label for="cardnumber">Card number</label>
+              <input id="cardnumber" type="text" pattern="[0-9]{16,19}" maxlength="19" placeholder="8888-8888-8888-8888"/>
+            </div>
+          </div>
+          <div class="row details">
+            <div class="left">
+              <label for="expiry-date">Expiry</label>
+              <select id="expiry-date-day">
+                <option>MM</option>
+                <option value="1">01</option>
+                <option value="2">02</option>
+                <option value="3">03</option>
+                <option value="4">04</option>
+                <option value="5">05</option>
+                <option value="6">06</option>
+                <option value="7">07</option>
+                <option value="8">08</option>
+                <option value="9">10</option>
+                <option value="11">11</option>
+                <option value="12">12</option>
+              </select>
+              <span>/</span>
+              <select id="expiry-date">
+                <option>YYYY</option>
+                <option value="2016">2016</option>
+                <option value="2017">2017</option>
+                <option value="2018">2018</option>
+                <option value="2019">2019</option>
+                <option value="2020">2020</option>
+                <option value="2021">2021</option>
+                <option value="2022">2022</option>
+                <option value="2023">2023</option>
+                <option value="2024">2024</option>
+                <option value="2025">2025</option>
+                <option value="2026">2026</option>
+                <option value="2027">2027</option>
+                <option value="2028">2028</option>
+                <option value="2029">2029</option>
+                <option value="2030">2030</option>
+              </select>
+            </div>
+            <div class="right">
+              <label>CVC/CVV</label>
+              <input type="text" maxlength="4" placeholder="123"/>
+            </div>
+          </div>
+        </div>
+        <div>
+          <button class="payment" mat-raised-button type="submit"   data-toggle="modal" data-target="#paymentModal">{{util.setWords('ConfirmAndPay')}}</button>
+        </div>
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>
+<div style="color: #111111" class="modal fade" id="paymentModal" data-backdrop="static"  data-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">{{util.setWords('YourOrderHasBeenPlacedSuccessfulLy')}}</h5>
+      </div>
+      <div class="modal-body">
+        {{util.setWords('PaymentOf')}} {{dataService.total}}&euro; {{util.setWords('isPending!!')}}
+      </div>
+      <div class="modal-footer">
+        <button style="color: white" type="button" routerLink="/payment-info/fail"  data-dismiss="modal"  class="btn btn-danger" (click)="confirmOrder(0)">{{util.setWords('Failed')}}</button>
+        <button type="button" class="btn btn-primary"  data-dismiss="modal"  routerLink="/payment-info/success" (click)="confirmOrder(1)">{{util.setWords('Success')}}</button>
+      </div>
+    </div>
+  </div>
+</div>

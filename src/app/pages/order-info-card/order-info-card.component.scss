@@ -1,0 +1,69 @@
+
+.info-card{
+  border-radius: 15px;
+  margin: 20px 10px 10px 10px;
+}
+
+hr{
+  background-color: #00a651;
+}
+
+
+@media (max-width: 1200px) {
+  .info-card{
+    border-radius: 15px;
+    margin: 5px;
+  }
+}
+
+.steps-title{
+  font-size: 20px;
+  margin-top: 20px;
+}
+
+.steps-subtitle{
+  font-size: 18px;
+  margin-top: 5px;
+}
+
+.check li:before {
+  content: '✓';
+}
+
+ul{
+  list-style: none;
+}
+
+//.mat-card{
+//  background-color: #1f1f1f!important;
+//  color: white;
+//}
+//
+//.mat-horizontal-stepper{
+//  background-color: #1f1f1f!important;
+//  color: white;
+//}
+
+.vertical-align{
+  height: 100%;
+  vertical-align: middle;
+}
+
+.main-icon{
+  font-size: 33px;
+}
+
+.sub-icon{
+  font-size: 28px;
+}
+
+deep .mat-form-field-type-mat-select .mat-form-field-label, .mat-select-value {
+    color: grey;
+}
+
+.amount-info{
+  color: black;
+  font-style: italic;
+  font-size: 12px;
+}
+

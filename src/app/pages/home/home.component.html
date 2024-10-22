@@ -1,0 +1,29 @@
+<div class="container">
+  <div class="flex-container">
+    <div class="stepper-container">
+
+      <mat-card class="main-card mat-elevation-z5" #stepper>
+          <mat-horizontal-stepper class="black-stepper" labelPosition="bottom"  [linear]="isLinear" [selectedIndex]="dataService.index" #stepper>
+
+
+            <mat-step [completed]="dataService.step.desc">
+              <ng-template matStepLabel>{{util.setWords('Description')}}</ng-template>
+              <app-piano-desc></app-piano-desc>
+
+           </mat-step>
+            <mat-step [completed]="dataService.step.location">
+              <ng-template matStepLabel>{{util.setWords('LocationAndTime')}}</ng-template>
+              <app-select-location></app-select-location>
+            </mat-step>
+            <mat-step [completed]="dataService.step.payment">
+              <ng-template matStepLabel>{{util.setWords('Order')}}</ng-template>
+              <app-place-order></app-place-order>
+            </mat-step>
+          </mat-horizontal-stepper>
+      </mat-card>
+    </div>
+    <div class="info-container" id="1">
+      <app-order-info-card></app-order-info-card>
+    </div>
+  </div>
+</div>

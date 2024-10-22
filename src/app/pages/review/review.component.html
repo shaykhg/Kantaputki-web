@@ -1,0 +1,28 @@
+<div class="container text-center">
+  <mat-card *ngIf="orderData" class="mat-elevation-z5 review-card">
+    <h2>{{util.setWords('Dear')}} {{orderData.name}},</h2>
+    <h5>{{util.setWords('PleaseProvideYourValuableFeedback')}}</h5>
+    <hr>
+    <div *ngFor="let review of reviewType" class="row">
+      <div class="col">
+        {{review.name}}
+      </div>
+      <div class="col">
+        <star-rating [value]="1" [totalstars]="5" checkedcolor="blueviolet" uncheckedcolor="black" size="24" readonly="false" (rate)="onRate($event, review.name, review._id)"></star-rating>
+      </div>
+    </div>
+
+    <mat-form-field appearance="outline" class="w-full m-t-30">
+      <mat-label>{{util.setWords('Remarks')}}</mat-label>
+      <label>
+        <textarea [(ngModel)]="remark" matInput></textarea>
+
+      </label>
+    </mat-form-field>
+
+    <div class="t-right">
+      <button mat-raised-button class="sbmt-btn" (click)="submitReview()">{{util.setWords('SubmitFeedBack')}}</button>
+    </div>
+
+  </mat-card>
+</div>

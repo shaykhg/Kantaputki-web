@@ -1,0 +1,134 @@
+<div *ngIf="progress"  class="progress-spin">
+  <mat-spinner strokeWidth="4"></mat-spinner>
+
+</div>
+<div  *ngIf="!progress"  class="container">
+  <h2 >{{util.setWords('AllOrder')}}</h2>
+
+  <div *ngIf="allOrders.length > 0">
+    <div class="m-t-20" *ngFor="let order of allOrders">
+      <mat-accordion class="m-t-20">
+        <mat-accordion>
+          <mat-expansion-panel class="mat-elevation-z5">
+            <mat-expansion-panel-header>
+              <mat-panel-title  class="hd-lg">
+                <div >
+                  <span class="mdi mdi-information-outline"></span> {{order._id}}
+                </div>
+              </mat-panel-title>
+
+              <mat-panel-description class="hd-lg">
+                <div class="row">
+                  <div class="col">
+                    <div >
+                      <span class="mdi mdi-piano"></span> {{order.pianoName}}
+                      <span [style.color]="getStatusColor(order.status)" class="status">  ({{getStatus(order.status)}})</span>
+                    </div>
+                  </div>
+                </div>
+              </mat-panel-description>
+
+                <div class="row hd-sm">
+                  <div class="text-white col-12">
+                    <span class="mdi mdi-information-outline"></span> {{order._id}}
+                  </div>
+                    <div class="text-white col-12">
+                      <span class="mdi mdi-piano"></span> {{order.pianoName}}
+                      <span [style.color]="getStatusColor(order.status)" class="status">  ({{getStatus(order.status)}})</span>
+                    </div>
+                </div>
+
+
+
+            </mat-expansion-panel-header>
+
+            <div >
+              <h5 class="m-t-30">{{util.setWords('OrderDetails')}}</h5>
+              <span [style.color]="getStatusColor(order.status)" class="status-mobile">  ({{getStatus(order.status)}})</span>
+
+              <hr>
+
+              <div class="order-details-table">
+                <div class="row">
+                  <div class="col-lg-4 col-xs-12 m-t-5"><span class="mdi mdi-information-outline m-r-8"></span>{{util.setWords('OrderDetails')}}</div>
+                  <div class="col-lg-8 col-xs-12 m-t-5">{{order._id}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-4 col-xs-12 m-t-5"><span class="mdi mdi-calendar-range-outline m-r-8"></span>{{util.setWords('OrderDate')}}</div>
+                  <div class="col-lg-8 col-xs-12 m-t-5">{{util.getHumanShortDate(order.date)}}</div>
+                </div>
+<!--                <div class="row">-->
+<!--                  <div class="col-lg-4 col-xs-12 m-t-5"><span class="mdi mdi-piano m-r-8"></span>{{util.setWords('Name')}}</div>-->
+<!--                  <div class="col-8">{{order.pianoName}}</div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                  <div class="col-lg-4 col-xs-12 m-t-5"><span class="mdi mdi-numeric m-r-8"></span>{{util.setWords('SerialNo.')}}</div>-->
+<!--                  <div class="col-8">{{order.serial}}</div>-->
+<!--                </div>-->
+<!--                <div class="row">-->
+<!--                 <div class="col-lg-4 col-xs-12 m-t-5"><span class="mdi mdi-music-note m-r-8"></span>{{util.setWords('PianoType')}}</div>-->
+<!--                  <div class="col-8">{{order.type}}</div>-->
+<!--                </div>-->
+                <div class="row">
+                 <div class="col-lg-4 col-xs-12 m-t-5"><span class="mdi mdi-hammer-screwdriver m-r-8"></span>{{util.setWords('LastService')}}</div>
+                  <div class="col-8">{{getServiceTime(order)}}</div>
+                </div>
+                <div class="row">
+                 <div class="col-lg-4 col-xs-12 m-t-5"><span class="mdi mdi-cash m-r-8"></span>{{util.setWords('Total')}}</div>
+                  <div class="col-8">{{order.total}}</div>
+                </div>
+              </div>
+
+
+              <h5 class="m-t-30">{{util.setWords('ServiceList')}}</h5>
+              <hr>
+
+              <ul>
+                <li *ngFor="let service of order.service">{{service.name}}</li>
+              </ul>
+
+              <small matTooltip="Go to you profile section edit your contact info" class="hint">{{util.setWords('HowDoIEdit')}}</small>
+
+
+              <div class="fs-16" *ngIf="order.extended">
+                <h5 class="m-t-30">{{util.setWords('EditedOrderDetails')}}</h5>
+                <hr>
+
+                <div class="row">
+                  <div class="col-lg-4 col-xs-12 m-t-5"><span class="mdi mdi-calendar-range-outline m-r-8"></span> {{util.setWords('BookingID')}}</div>
+                  <div class="col-lg-8 col-xs-12 m-t-5">{{order._id}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-4 col-xs-12 m-t-5"><span class="mdi mdi-list-status m-r-8"></span>Status</div>
+                  <div class="col-lg-8 col-xs-12 m-t-5">{{order.additional.status}}</div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-4 col-xs-12 m-t-5"><span class="mdi mdi-cash m-r-8"></span>{{util.setWords('Total')}}</div>
+                  <div class="col-lg-8 col-xs-12 m-t-5">{{order.additional.total}}&euro;</div>
+                </div>
+                <h6 class="m-t-20">{{util.setWords('NewServices')}}</h6>
+                <ul>
+                  <li *ngFor="let service of order.additional.services">{{service.name}}</li>
+                </ul>
+              </div>
+
+
+<!--              <div style="text-align: right">-->
+<!--                <button mat-flat-button class="edit-button" *ngIf="showEditButton(order.status, order.extended)" (click)="editOrder(order._id)">{{util.setWords('Edit')}}</button>-->
+<!--                <span *ngIf="showCancelButton(order.status)"  (click)="cancelOrder(order._id)">-->
+<!--                  <button mat-flat-button class="m-l-10 cancel-button" *ngIf="!cancelSpin" >{{util.setWords('Cancel')}}</button>-->
+<!--                </span>-->
+<!--                <mat-spinner *ngIf="cancelSpin" class="cancel-spin m-l-10" diameter="30"></mat-spinner>-->
+<!--              </div>-->
+            </div>
+          </mat-expansion-panel>
+        </mat-accordion>
+      </mat-accordion>
+    </div>
+  </div>
+  <div>
+    <mat-card  *ngIf="allOrders.length === 0">
+      <h3 class="text-center">{{util.setWords('NoOrders')}}</h3>
+    </mat-card>
+  </div>
+</div>

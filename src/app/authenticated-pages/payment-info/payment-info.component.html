@@ -1,0 +1,30 @@
+<div *ngIf="status === 'success'" class="container">
+  <div class="jumbotron text-center">
+    <h1 class="display-3">{{util.setWords('ThankYou!')}}</h1>
+    <h4 class="m-t-10">{{util.setWords('YourOrderHasBeenPlacedSuccessfulLy')}}</h4>
+    <p class="lead">{{util.setWords('PleaseLoginToCheckStatus')}}</p>
+    <hr>
+    <p>
+      {{util.setWords('HavingTrouble?')}} <a href="">{{util.setWords('ContactUs')}}</a>
+    </p>
+    <p class="lead">
+      <a class="btn btn-primary btn-sm" href="" role="button">{{util.setWords('ContinueToHomepage')}}</a>
+    </p>
+  </div>
+
+</div>
+<div *ngIf="status === 'fail'" class="container">
+  <div class="jumbotron text-center">
+    <h1 class="display-3">{{util.setWords('Sorry!')}}</h1>
+    <p><strong>{{util.setWords('YourTransactionOf')}}  <b>{{data.total}}&euro;</b>  {{util.setWords('Failed')}}</strong></p>
+    <p class="lead">{{util.setWords('YouCanReachOut')}}</p>
+    <hr>
+    <p>
+      {{util.setWords('HavingTrouble?')}} <a href="">{{util.setWords('ContactUs')}}</a>
+    </p>
+    <p class="lead">
+      <a class="btn btn-primary btn-sm" href="" role="button">{{util.setWords('ContinueToHomepage')}}</a>
+    </p>
+  </div>
+
+</div>

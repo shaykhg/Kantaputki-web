@@ -1,0 +1,208 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/theming";
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+@import "./assets/css/util.css";
+// Include the common styles for Angular Material. We include this here so that you only
+// have to load a single css file for Angular Material in your app.
+// Be sure that you only ever include this mixin once!
+@include mat-core();
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$angular-primary: mat-palette($mat-green, 500, 100, 900);
+$angular-accent: mat-palette($mat-green, A200, A100, A400);
+
+// The warn palette is optional (defaults to red).
+$angular-warn: mat-palette($mat-red);
+
+// Create the theme object. A theme consists of configurations for individual
+// theming systems such as "color" or "typography".
+$angular-default-theme: mat-light-theme(
+    (
+      color: (
+        primary: $angular-primary,
+        accent: $angular-accent,
+        warn: $angular-warn,
+      ),
+    )
+);
+
+@include angular-material-theme($angular-default-theme);
+
+$angular-dark-theme: mat-dark-theme(
+    (
+      color: (
+        primary: $angular-primary,
+        accent: $angular-accent,
+        warn: $angular-warn,
+      ),
+    )
+);
+
+.darkMode {
+  @include angular-material-color($angular-dark-theme);
+}
+
+//@import url('https://fonts.googleapis.com/css2?family=Nunito&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Karla:wght@400;700&display=swap');
+@import '~@mdi/font/css/materialdesignicons.css';
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Karla', sans-serif}
+
+//.mat-form-field-appearance-outline .mat-form-field-infix {
+//  padding: 10px;
+//}
+
+.white-snackbar {
+  background: teal;
+  color: white;
+}
+.error-snackbar{
+  background: orangered;
+  color: white;
+}
+
+input{
+  color: #00a651!important;
+}
+
+*{
+  font-family: 'Karla', sans-serif;
+}
+
+.mat-ink-bar{
+  min-width: 50% !important
+}
+
+.mat-tab-label{
+  min-width: 50% !important;
+}
+
+
+//FOR DARK THEME
+
+//.mat-card{
+//  background-color: #1d1d1d;
+//  color: white;
+//}
+//
+//.card-shadow {
+//  -webkit-box-shadow: 0 8px 6px -6px #424242;
+//  -moz-box-shadow: 0 8px 6px -6px #424242;
+//  box-shadow: 0 8px 6px -6px #424242;
+//}
+//
+//.mat-stepper-horizontal{
+//  background-color: #1d1d1d!important;
+//  color: white;
+//}
+//
+//.mat-form-field-appearance-outline .mat-form-field-outline {
+//  color: rgba(255, 255, 255, 0.48);
+//}
+//
+//mat-step-header .mat-step-label.mat-step-label-active {
+//  color: #f0f0f0!important;
+//}
+//
+//.mat-step-header .mat-step-label, .mat-step-header .mat-step-optional {
+//  color: #f0f0f0!important;
+//}
+//
+//.stepper-horizontal-line {
+//  color: #f0f0f0!important;
+//}
+//
+//.mat-horizontal-stepper-header::before, .mat-horizontal-stepper-header::after, .mat-stepper-horizontal-line {
+//  border-top-color:  #f0f0f0!important;
+//}
+//
+//.mat-form-field-appearance-outline.mat-focused .mat-form-field-outline-thick {
+//  color: #f0f0f0!important;
+//}
+//
+//.mat-form-field-label {
+//  color:  #f0f0f0!important;
+//}
+//
+//.mat-input-element {
+//  caret-color: #f0f0f0!important;
+//}
+//
+//.mat-select-value {
+//  color: #f0f0f0!important;
+//}
+//input{
+//  color: #f0f0f0!important;
+//}
+//
+//label{
+//  display: block;
+//}
+//
+//.mat-tab-label{
+//  color: white!important;
+//}
+//
+//.mat-tab-group{
+//  background: #272727;
+//  border-radius: 10px;
+//  padding: 20px;
+//}
+//button:focus {
+//  outline: none !important;
+//}
+//
+.mat-expansion-panel-header{
+  padding: 5px 2px 5px 10px!important;
+}
+
+// mat stepper css
+
+mat-step-header .mat-step-label {
+  overflow: visible;
+  font-size: small;
+}
+
+
+.mat-step-label {
+  display: inline-block;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: unset;
+  min-width: auto!important;
+  vertical-align: middle;
+}
+
+.mat-stepper-label-position-bottom .mat-horizontal-stepper-header .mat-step-label {
+  padding: 16px 0 0 0;
+  text-align: center;
+  width: auto!important;
+}
+
+.mat-step-text-label {
+  text-overflow: unset!important;
+  overflow: hidden!important;
+}
+
+label{
+  display: block;
+}
+
+.mat-expansion-panel-header-description {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mat-step-header .mat-step-icon {
+  background-color: white!important;
+  color: black!important;
+  border: 1px solid black;
+}
+
+.mat-step-header .mat-step-icon-selected, .mat-step-header .mat-step-icon-state-done, .mat-step-header .mat-step-icon-state-edit {
+  background-color: #4caf50!important;
+  color: white!important;
+  border: 1px solid #4caf50;
+}
